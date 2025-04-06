@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# uvr mypy --strict example.py
+# exit
+
 # uvr pytest
 
 # --cov-report xml - generate an XML report for CI/CD tools
