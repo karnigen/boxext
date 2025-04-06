@@ -3,6 +3,25 @@
 [`Python-Box`](https://github.com/cdgriffith/Box) lets you access dictionaries using attribute-style access (dot notation). It's super handy for working with JSON, configuration files, or any data where you'd prefer `data.key` over `data['key']`.
 
 
+## BoxExt Package Description
+
+`BoxExt` is an extension of the `Box` class from the `python-box` library, designed to enhance dictionary manipulation in Python with additional functionalities.
+
+**Key Features:**
+
+* **Extends Box Functionality**: `BoxExt` introduces functions to streamline common dictionary operations:
+    * `str_box()`: Creates a `Box` object from a string of keys and values.
+    * `str_dict()`: Creates a dictionary from a string of keys and values.
+    * `update_keys_values()`: Updates keys and values in a `Box` or dictionary object.
+    * `update_selected()`: Updates selected keys in a `Box` or dictionary from another `Box` or dictionary.
+    * `mget()`: Returns a tuple of values for specified keys.
+    * `mdel()`: Deletes specified keys and returns a list of deleted keys.
+    * `mset()`: Sets the same value for multiple keys.
+    * `mlambda()`: Applies a lambda function to keys and values.
+* **Error Handling**: Functions include error handling, such as raising `ValueError` for mismatched key and value lengths.
+
+
+
 ## Installation
 
 To install `boxext`, use the following command:
@@ -24,7 +43,38 @@ uv sync [-U|--upgrade]
 uv sync [-P|--upgrade-package] boxext
 ```
 
-## Usage
+
+**Usage Examples:**
+
+```python
+from boxext import BoxExt
+
+# Creating a BoxExt object from a string
+a = BoxExt.str_box("a b c", "1 2 3")  # Box(a='1', b='2', c='3')
+
+# Updating keys and values
+a = BoxExt.str_box("a b c", "1 2 3")
+BoxExt.update_keys_values(a, "b c", "4 5")  # Box(a='1', b='4', c='5')
+
+# Getting values for specified keys
+a = BoxExt.str_box("a b c", [1, 2, 3])
+BoxExt.mget(a, "a b")  # (1, 2)
+
+# Deleting keys
+a = BoxExt.str_box("a b c", [1, 2, 3])
+BoxExt.mdel(a, "a b")  # ['a', 'b'], a is now {'c': 3}
+
+# Setting the same value for multiple keys
+a = BoxExt()
+BoxExt.mset(a, "a b c", 1)  # a is now {'a': 1, 'b': 1, 'c': 1}
+
+# Applying a lambda function to keys and values
+a = BoxExt()
+BoxExt.mlambda(a, "a b c", [1, 2, 3], lambda d, k, v: d.update({k: [v]}))
+# a is now {'a': [1], 'b': [2], 'c': [3]}
+
+
+## Detailed Usage
 
 ## str_box() Function Examples
 
