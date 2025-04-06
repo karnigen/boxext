@@ -26,7 +26,7 @@ uv sync [-P|--upgrade-package] boxext
 
 ## Usage
 
-## str_box/str_dict Function Examples
+## str_box() Function Examples
 
 Here are examples demonstrating the usage of the `str_box` function:
 
@@ -41,7 +41,7 @@ Here are examples demonstrating the usage of the `str_box` function:
 * `a = str_box({'a':10, 'b':20}, {1: 2, 3: 4})` -> `Box(a=2, b=4)`
 
 
-## str_dict Function Examples
+## str_dict() Function Examples
 
 Here are examples demonstrating the usage of the `str_dict` function:
 
@@ -57,7 +57,7 @@ Here are examples demonstrating the usage of the `str_dict` function:
 
 ## Error Handling
 
-The `str_box` function raises a `ValueError` when the lengths of the keys and values do not match:
+The `str_box()` function raises a `ValueError` when the lengths of the keys and values do not match:
 
 **Examples:**
 
@@ -68,7 +68,7 @@ The `str_box` function raises a `ValueError` when the lengths of the keys and va
 * `a = str_box("a b c", {1: 2, 3: 4})` -> raises `ValueError`
 
 
-## update_pairs Function Examples
+## update_pairs() Function Examples
 
 Updates keys and values in the given Box or dict object, preferring `values`.
 
@@ -79,7 +79,7 @@ Updates keys and values in the given Box or dict object, preferring `values`.
 * `update_pairs(a, "b c", "4 5")` -> `Box(a='1', b='4', c='5')`
 
 
-## update_selected Function Examples
+## update_selected() Function Examples
 
 Updates selected keys in the given Box or dict object from another Box or dict.
 
@@ -90,9 +90,9 @@ Updates selected keys in the given Box or dict object from another Box or dict.
 * `update_selected(a, b, "b c")` -> Updates `a` with values from `b` for keys "b" and "c".
 * `update_selected(a, b, a)` -> Updates `a` with values from `b` but only for keys present in `a`.
 
-## mget Function Description
+## mget() Function Description
 
-`mget` - returns a tuple of values for the specified keys from the input Box or dictionary.
+`mget()` - returns a tuple of values for the specified keys from the input Box or dictionary.
 
 **Examples:**
 
@@ -103,9 +103,9 @@ Updates selected keys in the given Box or dict object from another Box or dict.
 * `mget(a, b)` -> `(2, 3)` (Returns values from `a` for keys present in `b`)
 
 
-## mdel Function Description
+## mdel() Function Description
 
-`mdel` - deletes the specified keys from the input Box or dictionary  and returns a list of the deleted keys. This is particularly useful for determining which keys were actually removed.
+`mdel()` - deletes the specified keys from the input Box or dictionary  and returns a list of the deleted keys. This is particularly useful for determining which keys were actually removed.
 
 **Example:**
 
@@ -113,9 +113,9 @@ Updates selected keys in the given Box or dict object from another Box or dict.
 * `mdel(a, "a b")` -> `['a', 'b']`, resulting in `a` being modified to `{'c': 3}`.
 
 
-## mset Function Description
+## mset() Function Description
 
-`mset` - sets the same value for multiple keys in the input Box or dictionary.
+`mset()` - sets the same value for multiple keys in the input Box or dictionary.
 
 **Examples:**
 
@@ -124,9 +124,9 @@ Updates selected keys in the given Box or dict object from another Box or dict.
 
 * `mset(a, "a b c", [])` -> `a` is now `{'a': [], 'b': [], 'c': []}`
 
-## mlambda Function Description
+## mlambda() Function Description
 
-`mlambda` - applies a lambda function to specified keys and corresponding values in the input Box or dictionary.
+`mlambda()` - applies a lambda function to specified keys and corresponding values in the input Box or dictionary.
 
 **Examples:**
 
