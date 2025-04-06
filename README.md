@@ -19,7 +19,7 @@ uv tool upgrade boxext
 
 ## Usage
 
-## str_box Function Examples
+## str_box/str_dict Function Examples
 
 Here are examples demonstrating the usage of the `str_box` function:
 
@@ -30,6 +30,19 @@ Here are examples demonstrating the usage of the `str_box` function:
 * `a = str_box(["a", "b", "c"], {1: 2, 3: 4, 5: 6})` -> `Box(a=2, b=4, c=6)`
 * `a = str_box({'a':10, 'b':20}, {1: 2, 3: 4})` -> `Box(a=2, b=4)`
 
+
+## str_dict Function Examples
+
+Here are examples demonstrating the usage of the `str_dict` function:
+
+* `a = str_dict("a b c", "1 2 3")` -> `{'a': '1', 'b': '2', 'c': '3'}`
+* `a = str_dict("a b c", [1, 2, 3])` -> `{'a': 1, 'b': 2, 'c': 3}`
+* `a = str_dict("a b c", (1, 2, 3))` -> `{'a': 1, 'b': 2, 'c': 3}`
+* `a = str_dict("a b c", {1: 2, 3: 4, 5: 6})` -> `{'a': 2, 'b': 4, 'c': 6}`
+* `a = str_dict(["a", "b", "c"], {1: 2, 3: 4, 5: 6})` -> `{'a': 2, 'b': 4, 'c': 6}`
+* `a = str_dict({'a':10, 'b':20}, {1: 2, 3: 4})` -> `{'a': 2, 'b': 4}`
+
+
 ## Error Handling
 
 The `str_box` function raises a `ValueError` when the lengths of the keys and values do not match:
@@ -39,3 +52,11 @@ The `str_box` function raises a `ValueError` when the lengths of the keys and va
 * `a = str_box("a b c", [1, 2])` -> raises `ValueError`
 * `a = str_box("a b c", (1, 2))` -> raises `ValueError`
 * `a = str_box("a b c", {1: 2, 3: 4})` -> raises `ValueError`
+
+
+## update_keys_values Function Examples
+
+Updates keys and values in the given Box or dict object, preferring `__values`.
+
+* `a = str_box("a b c", "1 2 3")`
+* `update_keys_values(a, "b c", "4 5")` -> `Box(a='1', b='4', c='5')`
