@@ -1,0 +1,22 @@
+[project]
+name = "boxext"
+version = "0.1.0"
+description = "box extension"
+readme = "README.md"
+authors = [
+    { name = "karnigen", email = "karnigen@gmail.com" }
+]
+requires-python = ">=3.9"
+dependencies = [
+    "python-box>=7.3.2",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3.5",
+    "pytest-cov>=6.1.1",
+]
