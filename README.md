@@ -72,7 +72,7 @@ BoxExt.mset(a, "a b c", 1)  # a is now {'a': 1, 'b': 1, 'c': 1}
 a = BoxExt()
 BoxExt.mlambda(a, "a b c", [1, 2, 3], lambda d, k, v: d.update({k: [v]}))
 # a is now {'a': [1], 'b': [2], 'c': [3]}
-
+```
 
 ## Detailed Usage
 
