@@ -54,9 +54,19 @@ The `str_box` function raises a `ValueError` when the lengths of the keys and va
 * `a = str_box("a b c", {1: 2, 3: 4})` -> raises `ValueError`
 
 
-## update_keys_values Function Examples
+## update_pairs Function Examples
 
 Updates keys and values in the given Box or dict object, preferring `__values`.
 
 * `a = str_box("a b c", "1 2 3")`
-* `update_keys_values(a, "b c", "4 5")` -> `Box(a='1', b='4', c='5')`
+* `update_pairs(a, "b c", "4 5")` -> `Box(a='1', b='4', c='5')`
+
+
+## update_selected Function Examples
+
+Updates selected keys in the given Box or dict object from another Box or dict.
+
+* `a = str_box("a b c", "1 2 3")`
+* `b = str_box("b c d", "4 5 6")`
+* `update_selected(a, b, "b c")` -> Updates `a` with values from `b` for keys "b" and "c".
+* `update_selected(a, b, a)` -> Updates `a` with values from `b` but only for keys present in `a`.

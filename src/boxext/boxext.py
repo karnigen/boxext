@@ -52,7 +52,7 @@ def str_dict(__keys : (str|list|tuple|dict), __values : (str|list|tuple|dict))  
 
 # Updates keys and values in the given Box|dict object, prefer __values
 #   a = str_box("a b c", "1 2 3")
-#   update_keys_values(a, "b c", "4 5") -> Box(a='1', b='4', c='5')
+#   update_pairs(a, "b c", "4 5") -> Box(a='1', b='4', c='5')
 def update_pairs(__a: dict, __keys: (str|list|tuple|dict), __values: (str|list|tuple|dict)) -> None:
     __a.update(_zip_keys_values(__keys, __values))
 
