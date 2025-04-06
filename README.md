@@ -20,7 +20,8 @@ uv remove boxex
 To upgrade `boxext`, use the following command:
 
 ```bash
-uv tool upgrade boxext
+uv sync [-U|--upgrade]
+uv sync [-P|--upgrade-package] boxext
 ```
 
 ## Usage
