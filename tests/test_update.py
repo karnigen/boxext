@@ -73,3 +73,48 @@ def test_mdel():
     assert a == {'a': 1}
     assert isinstance(a, Box)
     assert isinstance(a, dict)
+
+def test_mset():
+    a = Box()
+    assert len(a) == 0
+    mset(a, "a b c", 1)
+    assert len(a) == 3
+    assert a == {'a': 1, 'b': 1, 'c': 1}
+    assert isinstance(a, Box)
+    assert isinstance(a, dict)
+
+    mset(a, "a b c", [])
+    assert len(a) == 3
+    assert a == {'a': [], 'b': [], 'c': []}
+    assert isinstance(a, Box)
+    assert isinstance(a, dict)
+
+
+def test_mlambda():
+    a = Box()
+    assert len(a) == 0
+    mlambda(a, "a b c", [1, 2, 3], lambda d, k, v: d.update({k: [v]}))
+    assert len(a) == 3
+    assert a == {'a': [1], 'b': [2], 'c': [3]}
+    assert isinstance(a, Box)
+    assert isinstance(a, dict)
+
+    mlambda(a, "a b c", [3, 4, 5], lambda d, k, v: d[k].append(v))
+    assert len(a) == 3
+    assert a == {'a': [1, 3], 'b': [2, 4], 'c': [3, 5]}
+    assert isinstance(a, Box)
+    assert isinstance(a, dict)
+
+    a = Box()
+    mset(a, "a b c", [])
+    assert len(a) == 3
+    mlambda(a, "a b c", [0, 1, 2], lambda d, k, v: d[k].append(v))
+    mlambda(a, "a b c", [3, 4, 5], lambda d, k, v: d[k].append(v))
+    mlambda(a, "a b c", [6, 7, 8], lambda d, k, v: d[k].append(v))
+    assert len(a) == 3
+    assert a == {'a': [0, 3, 6], 'b': [1, 4, 7], 'c': [2, 5, 8]}
+    assert isinstance(a, Box)
+
+    r = mlambda(a, "a b c", None, lambda d, k, v: d[k][0])
+    assert len(a) == 3
+    assert r == [0, 1, 2]

@@ -2,22 +2,28 @@
 
 from box import Box   # install python-box
 
-def _zip_keys_values(__keys : (str|list|tuple|dict), __values : (str|list|tuple|dict)) -> iter:
+def _parse_keys(__keys : (str|list|tuple|dict)) -> list:
     if isinstance(__keys, str):
         __keys = __keys.split()
     elif isinstance(__keys, dict):
         __keys = list(__keys.keys())
+    return __keys
 
+def _parse_values(__values : (str|list|tuple|dict)) -> list:
     if isinstance(__values, str):
         __values = __values.split()
     elif isinstance(__values, dict):
         __values = list(__values.values())
+    return __values
+
+def _zip_keys_values(__keys : (str|list|tuple|dict), __values : (str|list|tuple|dict)) -> iter:
+    __keys = _parse_keys(__keys)
+    __values = _parse_values(__values)
 
     if len(__keys) != len(__values):
         raise ValueError("Length of keys and values must be equal")
 
     return zip(__keys, __values)
-
 
 
 # Creates new Box object from keys and values
@@ -56,10 +62,7 @@ def update_pairs(__a: dict, __keys: (str|list|tuple|dict), __values: (str|list|t
 #   update_selected(a, b, "b c")
 #   update_selected(a, b, a)  # updates a with b but only keys from a
 def update_selected(__a: dict, __b: dict, __keys: (str|list|tuple|dict)) -> None:
-    if isinstance(__keys, str):
-        __keys = __keys.split()
-    elif isinstance(__keys, dict):
-        __keys = list(__keys.keys())
+    __keys = _parse_keys(__keys)
 
     for k in __keys:
         if k in __b:
@@ -71,21 +74,15 @@ def update_selected(__a: dict, __b: dict, __keys: (str|list|tuple|dict)) -> None
 #   b = str_box("b c d", [4, 5, 6])
 #   mget(a, b) -> (2, 3)
 def mget(__a: dict, __keys: (str|list|tuple|dict)) -> tuple:
-    if isinstance(__keys, str):
-        __keys = __keys.split()
-    elif isinstance(__keys, dict):
-        __keys = list(__keys.keys())
+    __keys = _parse_keys(__keys)
 
     return tuple(__a[k] for k in __keys if k in __a)
 
-# mdel - delete keys from __a and return list of deleted keys
+# mdel - delete keys from __a and return list of deleted keys, important to find out which keys were deleted
 #   a = str_box("a b c", [1, 2, 3])
 #   mdel(a, "a b") -> ['a', 'b'], a is now {'c': 3}
 def mdel(__a: dict, __keys: (str|list|tuple|dict)) -> list:
-    if isinstance(__keys, str):
-        __keys = __keys.split()
-    elif isinstance(__keys, dict):
-        __keys = list(__keys.keys())
+    __keys = _parse_keys(__keys)
 
     __used_keys = []
     for k in __keys:
@@ -94,3 +91,32 @@ def mdel(__a: dict, __keys: (str|list|tuple|dict)) -> list:
             __used_keys.append(k)
 
     return __used_keys
+
+# mset - set value for keys in __a
+#   a = Box()
+#   mset(a, "a b c", 1) -> a is now {'a': 1, 'b': 1, 'c': 1}
+#   mset(a, "a b c", []) -> a is now {'a': [], 'b': [], 'c': []}
+def mset(__a: dict, __keys: (str|list|tuple|dict), __value) -> None:
+    __keys = _parse_keys(__keys)
+
+    for k in __keys:
+        __a[k] = __value
+
+
+# mlambda - apply lambda function to keys and values in __a
+#   a = Box()
+#   mlambda(a, "a b c", [1,2,3], lambda d, k, v: d.update({k: [v]}))
+#   mlambda(a, "a b c", [3,4,5], lambda d, k, v: d[k].append(v))
+def mlambda(__a: dict, __keys: (str|list|tuple|dict), __values: (str|list|tuple|dict),  __lambda) -> list:
+    __keys = _parse_keys(__keys)
+    __values = _parse_values(__values)
+
+    __results = []
+
+    if isinstance(__values, (list, tuple)):
+        for i, k in enumerate(__keys):
+            __results.append(__lambda(__a, k, __values[i]))
+    else:
+        for k in __keys:
+            __results.append(__lambda(__a, k, __values))
+    return __results
