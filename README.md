@@ -8,7 +8,13 @@
 To install `boxext`, use the following command:
 
 ```bash
-uv tool install --from git+https://github.com/karnigen/boxext boxext
+uv add git+https://github.com/karnigen/boxext
+```
+
+To uninstall, use the following command:
+
+```bash
+uv remove boxex
 ```
 
 To upgrade `boxext`, use the following command:
