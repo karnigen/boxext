@@ -19,11 +19,15 @@ def check_update():
     a.update(str_box("b c", "4 5"))
     print(f"{a=}")
 
+def check_mget():
+    a = str_box("a b c", [1, 2, 3])
+    print(f"{mget(a, "a b")=}")
 
 
 def main():
     # check_box_from_str()
-    check_update()
+    # check_update()
+    check_mget()
 
 if __name__ == "__main__":
     main()
